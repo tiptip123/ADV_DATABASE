@@ -1,0 +1,198 @@
+
+Setting environment for using XAMPP for Windows.
+Administrator@JAY c:\xampp
+# -u root -p
+'-u' is not recognized as an internal or external command,
+operable program or batch file.
+
+Administrator@JAY c:\xampp
+#
+Administrator@JAY c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 20
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| db_sis             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| practice           |
+| test               |
++--------------------+
+7 rows in set (0.000 sec)
+
+MariaDB [(none)]> create database db_bl;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> use db_bl;
+Database changed
+MariaDB [db_bl]> CREATE TABLE Owner (
+    ->     OwnerID INT PRIMARY KEY AUTO_INCREMENT,
+    ->     OwnerName VARCHAR(255) NOT NULL,
+    ->     ContactNum VARCHAR(15),
+    ->     Address VARCHAR(255),
+    ->     Email VARCHAR(255) UNIQUE
+    -> );
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [db_bl]> drop Owner;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Owner' at line 1
+MariaDB [db_bl]> drop table Owner;
+Query OK, 0 rows affected (0.006 sec)
+
+MariaDB [db_bl]> show created tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'created tables' at line 1
+MariaDB [db_bl]> show created table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'created table' at line 1
+MariaDB [db_bl]> show tables'
+    '> ;
+    '> '
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''
+;
+'' at line 1
+MariaDB [db_bl]> show tables;
+Empty set (0.000 sec)
+
+MariaDB [db_bl]> create table owner(
+    -> owner_ID int primary key auto_increment,
+    -> name varchar(50),
+    -> number varchar(11),
+    -> address varchar(50),
+    -> email varchar(50));
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [db_bl]> show tables;
++-----------------+
+| Tables_in_db_bl |
++-----------------+
+| owner           |
++-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [db_bl]> create table tenant(
+    -> tenant_ID int primary key auto_increment,
+    -> lname varchar(50) not null,
+    -> fname varchar(50) not null,
+    -> mname varchar(50),
+    -> email varchar(50),
+    -> number varchar(50));
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [db_bl]> create table bh(
+    -> bh_ID int primary key auto_increment,
+    -> name varchar(50),
+    -> location varchar(50),
+    -> price varchar(50),
+    -> rooms int,
+    -> ambiance varchar(50),
+    -> owner_id int,
+    -> foreign key (owner_id) references(owner_ID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(owner_ID))' at line 9
+MariaDB [db_bl]> create table bh(
+    -> bh_ID int primary key auto_increment,
+    -> name varchar(50),
+    -> location varchar(50),
+    -> price varchar(50),
+    -> rooms int,
+    -> ambiance varchar(50),
+    -> owner_id int,
+    -> foreign key (owner_id) references owner(owner_ID));
+Query OK, 0 rows affected (0.015 sec)
+
+MariaDB [db_bl]> create table reservation(
+    -> reservation_ID int primary key auoto_increment,
+    -> tenant_ID int,
+    -> bh_ID int,
+    -> startdate varchar(50),
+    -> enddate varchar(50),
+    -> foreign key (tenant_ID) references tenant (tenant_ID),
+    -> foreign key (bh_ID) references bh(bh_ID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '
+tenant_ID int,
+bh_ID int,
+startdate varchar(50),
+enddate varchar(50),
+foreig...' at line 2
+MariaDB [db_bl]> CREATE TABLE reservation (
+    ->     reservation_ID INT PRIMARY KEY AUTO_INCREMENT,
+    ->     tenant_ID INT,
+    ->     bh_ID INT,
+    ->     startdate VARCHAR(50),
+    ->     enddate VARCHAR(50),
+    ->     FOREIGN KEY (tenant_ID) REFERENCES tenant(tenant_ID),
+    ->     FOREIGN KEY (bh_ID) REFERENCES bh(bh_ID)
+    -> );
+Query OK, 0 rows affected (0.017 sec)
+
+MariaDB [db_bl]> create table revies(
+    -> review_ID int primary key auto_increment,
+    -> tenant_ID int,
+    -> bh_ID int,
+    -> rating varchar(50),
+    -> comments text,
+    -> foreign key (tenant_ID) references tenant(tenant_ID),
+    -> foreign key (bh_ID) references bh(bh_ID));
+Query OK, 0 rows affected (0.017 sec)
+
+MariaDB [db_bl]> create table paymentmethod(
+    -> payment_ID int primary key auto_increment,
+    -> paymenttype varchar(50));
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [db_bl]> create table transactionhistory(
+    -> transaction_ID int primary key auto_increment,
+    -> tenant_ID int,
+    -> bh_ID int,
+    -> payment_ID int,
+    -> rooamavail varchar(50),
+    -> receipt varchar(50),
+    -> foreign key (tenant_ID) references tenant (tenant_ID),
+    -> foreign key (bh_ID) references bh(BH_ID),
+    -> foreign key (payment_ID) references paymentmethod(payment_ID));
+Query OK, 0 rows affected (0.018 sec)
+
+MariaDB [db_bl]> show tables;
++--------------------+
+| Tables_in_db_bl    |
++--------------------+
+| bh                 |
+| owner              |
+| paymentmethod      |
+| reservation        |
+| revies             |
+| tenant             |
+| transactionhistory |
++--------------------+
+7 rows in set (0.000 sec)
+
+MariaDB [db_bl]> RENAME TABLE bh TO boardinghouse;
+Query OK, 0 rows affected (0.006 sec)
+
+MariaDB [db_bl]> RENAME TABLE revies TO reviews;
+Query OK, 0 rows affected (0.006 sec)
+
+MariaDB [db_bl]> show tables;
++--------------------+
+| Tables_in_db_bl    |
++--------------------+
+| boardinghouse      |
+| owner              |
+| paymentmethod      |
+| reservation        |
+| reviews            |
+| tenant             |
+| transactionhistory |
++--------------------+
+7 rows in set (0.000 sec)
